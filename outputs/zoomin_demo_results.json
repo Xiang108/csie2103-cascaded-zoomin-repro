@@ -1,0 +1,38 @@
+{
+  "method": "Faster R-CNN + cascaded zoom-in (simplified)",
+  "device": "cuda:0",
+  "num_images": 5,
+  "details": [
+    {
+      "image": "1697445997638_h_7.10m_roll_0.00_pitch_-0.80_yaw_51.70.jpg",
+      "full_image_detections": 4,
+      "zoom_pass_detections": 2,
+      "crops": 4
+    },
+    {
+      "image": "1697446091748_h_18.40m_roll_0.60_pitch_0.10_yaw_12.30.jpg",
+      "full_image_detections": 5,
+      "zoom_pass_detections": 2,
+      "crops": 5
+    },
+    {
+      "image": "1697446121380_h_32.30m_roll_-0.30_pitch_-6.00_yaw_37.70.jpg",
+      "full_image_detections": 11,
+      "zoom_pass_detections": 4,
+      "crops": 11
+    },
+    {
+      "image": "1697446215916_h_27.80m_roll_15.90_pitch_-2.30_yaw_-93.60.jpg",
+      "full_image_detections": 4,
+      "zoom_pass_detections": 1,
+      "crops": 4
+    },
+    {
+      "image": "1697446751120_h_22.30m_roll_-0.60_pitch_16.90_yaw_-48.70.jpg",
+      "full_image_detections": 4,
+      "zoom_pass_detections": 0,
+      "crops": 4
+    }
+  ],
+  "note": "課程簡化重現，驗證兩階段 zoom-in 流程可執行；非論文完整 Detectron2 訓練結果。"
+}
