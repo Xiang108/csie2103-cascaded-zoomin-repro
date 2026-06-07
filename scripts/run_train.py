@@ -41,6 +41,7 @@ def parse_metrics(log_text: str) -> dict:
 
 
 def main():
+    subprocess.check_call([sys.executable, str(ROOT / "scripts" / "download_visdrone.py") --coco])
     REPRO.mkdir(parents=True, exist_ok=True)
     (REPRO / "outputs").mkdir(parents=True, exist_ok=True)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
