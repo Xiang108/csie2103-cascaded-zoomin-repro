@@ -1,0 +1,8 @@
+*.out
+*.pyc
+temp/
+pretrained_models/*
+output/*
+dataseed/
+.ipynb_checkpoints/
+*.ipynb

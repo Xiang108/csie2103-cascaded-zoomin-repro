@@ -1,52 +1,86 @@
-# CSIE2103 重現紀錄：Cascaded Zoom-in Detector
+# CSIE2103 重現：Cascaded Zoom-in Detector
 
 學號：**M11417015**　姓名：**謝宇翔**  
 課程：CSIE 2103 類神經網路｜Spring 2026
 
-## 論文
-
 **Cascaded Zoom-in Detector for High Resolution Aerial Images**（CVPR 2023 EarthVision）  
-官方程式：https://github.com/akhilpm/DroneDetectron2
+官方：https://github.com/akhilpm/DroneDetectron2
 
-## 本 repo 內容
-
-本 repo 為**期末作業重現結果紀錄**，包含：
-
-| 檔案 | 說明 |
-|------|------|
-| [`results.json`](results.json) | 重現數值摘要 |
-| [`figures/`](figures/) | 訓練曲線、AP 對照圖 |
-| [`outputs/visdrone_train/`](outputs/visdrone_train/) | 訓練 metrics 與設定摘要 |
-
-> 模型權重（`.pth`）體積過大，未上傳至此 repo。
-
-## 重現設定
-
-| 項目 | 設定 |
-|------|------|
-| 框架 | Detectron2 + DroneDetectron2（RCNN-FPN-CROP） |
-| 資料集 | VisDrone2019-DET（train 6471 / val 548） |
-| 訓練 | 90000 iter |
-| 環境 | Python 3.12、PyTorch 2.12、detectron2 0.6、RTX 5090 |
-
-## 重現結果（VisDrone validation）
+## 重現結果（VisDrone val）
 
 | 指標 | 本次重現 |
 |------|----------|
 | AP | **33.4%** |
 | AP50 | **58.1%** |
 
-## 如何重現（參考官方 repo）
+訓練：Detectron2 RCNN-FPN-CROP，90000 iter，完整 VisDrone train 6471 / val 548。
+
+---
+
+## 快速開始
+
+### 1. 環境
 
 ```bash
-git clone https://github.com/akhilpm/DroneDetectron2.git
-cd DroneDetectron2
-# 依官方 README 安裝 Detectron2、準備 VisDrone 並訓練 RCNN-FPN-CROP
+git clone https://github.com/Xiang108/csie2103-cascaded-zoomin-repro.git
+cd csie2103-cascaded-zoomin-repro
+
+python3 -m venv .venv && source .venv/bin/activate
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
+pip install 'git+https://github.com/facebookresearch/detectron2.git@v0.6'
+pip install pycocotools matplotlib opencv-python-headless
 ```
 
-本 repo 的 `results.json` 與 `figures/` 可作為對照基準。
+### 2. 資料集（COCO 格式）
 
-## 差距原因與改善方向
+```
+datasets/VisDrone2019-DET-COCO/
+  annotations/VisDrone2019-DET_train_coco.json
+  annotations/VisDrone2019-DET_val_coco.json
+  images/train/*.jpg
+  images/val/*.jpg
+```
 
-- **可能原因**：backbone / 預訓練權重與論文表格設定略有差異
-- **改善方向**：對齊論文預訓練權重與完整 eval 流程
+同時需要 YOLO 版 VisDrone 供 symlink（見 `datasets/README.md`）。
+
+### 3. 準備 Detectron2 資料目錄
+
+```bash
+python3 scripts/prepare_data.py
+# 產生 datasets/VisDrone-Zoomin/
+```
+
+### 4. 訓練
+
+```bash
+python3 scripts/run_train.py
+```
+
+| 變數 | 預設 | 說明 |
+|------|------|------|
+| `ZOOMIN_GPU` | 1 | GPU 編號 |
+| `ZOOMIN_MAX_ITER` | 90000 | 訓練 iter |
+| `ZOOMIN_FRESH` | — | 設 1 強制從頭訓練 |
+
+### 5. 輸出
+
+| 路徑 | 內容 |
+|------|------|
+| `outputs/visdrone_train/` | checkpoint、metrics |
+| `results.json` | AP / AP50 |
+| `figures/` | 訓練曲線、對照圖 |
+
+---
+
+## 目錄結構
+
+```
+├── cascaded-zoomin/   # DroneDetectron2 fork
+├── scripts/
+│   ├── prepare_data.py
+│   ├── run_train.py
+│   └── plot_figures.py
+├── results.json
+├── figures/
+└── outputs/
+```

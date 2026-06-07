@@ -3,8 +3,11 @@ __pycache__/
 .DS_Store
 *.pth
 *.pt
+*.ckpt
 events.out.tfevents.*
+datasets/
 outputs/visdrone_train/model_*.pth
-outputs/visdrone_train_smoke/
 outputs/visdrone_train/inference/
+outputs/visdrone_train/last_checkpoint
+outputs/visdrone_train_smoke/
 sample_images/

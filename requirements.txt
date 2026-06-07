@@ -1,0 +1,6 @@
+torch>=2.0
+torchvision
+detectron2==0.6  # 見 https://detectron2.readthedocs.io/en/latest/tutorials/install.html
+pycocotools
+matplotlib
+opencv-python-headless
