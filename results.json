@@ -1,0 +1,19 @@
+{
+  "paper": "Cascaded Zoom-in Detector (CVPR 2023 EarthVision)",
+  "dataset": "VisDrone2019-DET full train 6471 + val 548",
+  "training": true,
+  "max_iter": 90000,
+  "last_iter": 89999,
+  "device": "cuda:1",
+  "output_dir": "reproduction/csie2103-cascaded-zoomin-repro/outputs/visdrone_train",
+  "log": "reproduction/csie2103-cascaded-zoomin-repro/outputs/train.log",
+  "metrics": {
+    "bbox_AP": 0.333758,
+    "bbox_AP50": 0.58136,
+    "bbox_AP75": 0.334834,
+    "bbox_APs": 0.258045,
+    "bbox_APm": 0.436986,
+    "bbox_APl": 0.423645
+  },
+  "status": "completed"
+}

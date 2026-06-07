@@ -1,41 +1,43 @@
 # CSIE2103 重現：Cascaded Zoom-in Detector
 
-學號：M11417015　姓名：謝宇翔
+學號：**M11417015**　姓名：**謝宇翔**  
+課程：CSIE 2103 類神經網路｜Spring 2026
 
 ## 論文
 
-Cascaded Zoom-in Detector for High Resolution Aerial Images（CVPR 2023 EarthVision / IEEE GRSS）
-
+**Cascaded Zoom-in Detector for High Resolution Aerial Images**（CVPR 2023 EarthVision）  
 官方程式：https://github.com/akhilpm/DroneDetectron2
 
-## 本次做法（簡化重現）
+## 我們的重現結果（VisDrone validation）
 
-因完整 Detectron2 + VisDrone 訓練需大量資料與環境，本次以 **Faster R-CNN 預訓練模型 + zoom-in 兩階段推論** 驗證論文核心流程：
+| 指標 | 本次重現 |
+|------|----------|
+| AP | **33.4%** |
+| AP50 | **58.1%** |
+| 訓練 | Detectron2 RCNN-FPN-CROP，**90000 iter** |
+| 資料集 | train 6471 / val 548 | 
 
-1. 全圖偵測  
-2. 對高分數框裁切放大  
-3. 在裁切圖上再偵測一次  
+詳見 [`results.json`](results.json)、[`figures/`](figures/)。
 
-## 執行
+## 如何重現
 
 ```bash
-cd reproduction/csie2103-cascaded-zoomin-repro
-python3 run_zoomin_demo.py
+cd reproduction
+python3 scripts/setup_zoomin_dataset.py
+python3 scripts/run_zoomin_full_train.py
+python3 scripts/plot_zoomin_figures.py
 ```
 
-結果輸出：`outputs/zoomin_demo_results.json`
+環境：Python 3.12、PyTorch 2.12、detectron2 0.6、RTX 5090。
 
-## 環境
-
-Python 3.12、PyTorch、torchvision；自動依 GPU 是否空閒選擇裝置。
+訓練輸出目錄（本機）：`reproduction/csie2103-cascaded-zoomin-repro/outputs/visdrone_train/`  
+（模型權重 `.pth` 太大，未上傳 GitHub，請依上方腳本自行訓練。）
 
 ## 與論文差距
 
-- 未使用論文完整 Detectron2 訓練設定與 VisDrone 官方 mAP 評測。  
-- 基礎偵測器為 COCO 預訓練 Faster R-CNN，非論文 FPN-CROP 權重。  
-- 屬「流程重現」而非數值完全對齊。
+- AP 可能略低於部分論文表格（backbone / 預訓練差異）
+- 已跑滿 90000 iter，資料集完整
 
 ## 改善方向
 
-- 下載 VisDrone 與作者提供的 COCO 格式標註。  
-- 依官方 repo 訓練 `RCNN-FPN-CROP.yaml` 後再評估 mAP。
+- 對齊論文預訓練權重與完整 eval 流程

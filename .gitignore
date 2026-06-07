@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.DS_Store
+*.pth
+*.pt
+events.out.tfevents.*
+outputs/visdrone_train/model_*.pth
+outputs/visdrone_train_smoke/
+outputs/visdrone_train/inference/
+sample_images/

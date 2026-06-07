@@ -1,0 +1,10 @@
+{
+  "figures": [
+    "01_training_curves.png",
+    "02_ap_comparison.png"
+  ],
+  "metrics": {
+    "bbox_AP": 0.333758,
+    "bbox_AP50": 0.58136
+  }
+}
